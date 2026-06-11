@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juego Matemático</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    color:white;
+    overflow-x:hidden;
+}
+
+/* VIDEO FONDO */
+
+.video-fondo{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-2;
+}
+
+.capa{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.45);
+    z-index:-1;
+}
+
+/* BIENVENIDA */
+
+#pantallaBienvenida{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,0.90);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    z-index:99999;
+}
+
+.bienvenida-box{
+
+    background:rgba(0,0,0,0.75);
+
+    padding:40px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    border:2px solid #00d4ff;
+
+    box-shadow:
+    0 0 20px #00d4ff,
+    0 0 40px #00d4ff;
+
+    max-width:600px;
+}
+
+.bienvenida-box h1{
+    margin-bottom:15px;
+}
+
+.bienvenida-box p{
+    margin-bottom:20px;
+}
+
+.bienvenida-box button{
+
+    padding:15px 35px;
+
+    border:none;
+
+    border-radius:30px;
+
+    background:#00d4ff;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+/* MENU */
+
+.menu{
+    position:fixed;
+    top:0;
+    left:0;
+
+    width:100%;
+    height:110px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 40px;
+
+    background:rgba(0,0,0,0.55);
+
+    backdrop-filter:blur(8px);
+
+    border-bottom:2px solid rgba(255,255,255,0.15);
+
+    z-index:1000;
+}
+
+.logo img{
+    height:90px;
+}
+
+.izquierda,
+.derecha{
+    display:flex;
+    gap:25px;
+    align-items:center;
+}
+
+.menu a{
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+    transition:0.3s;
+}
+
+.menu a:hover{
+    color:#00d4ff;
+}
+
+/* PORTADA */
+
+.portada{
+    height:100vh;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+}
+
+.circulo{
+    width:220px;
+    height:220px;
+
+    border-radius:50%;
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    border:4px solid rgba(255,255,255,0.5);
+
+    box-shadow:
+        0 0 15px #00d4ff,
+        0 0 30px #00d4ff,
+        0 0 50px #00d4ff;
+
+    animation:latido 2s infinite;
+}
+
+@keyframes latido{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.08);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
+
+.titulo1{
+
+    margin-top:25px;
+
+    font-size:65px;
+
+    text-shadow:
+    0 0 10px #00d4ff,
+    0 0 20px #00d4ff;
+}
+
+.titulo2{
+
+    font-size:45px;
+
+    text-shadow:
+    0 0 10px #00d4ff;
+}
+
+.texto{
+
+    margin-top:15px;
+
+    font-size:20px;
+}
+
+.boton{
+
+    margin-top:25px;
+
+    padding:15px 40px;
+
+    border:none;
+
+    border-radius:40px;
+
+    background:#00d4ff;
+
+    color:black;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.boton:hover{
+    transform:scale(1.08);
+}
+
+.mini-circulo{
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    border:2px solid white;
+
+    box-shadow:
+        0 0 10px #00d4ff;
+
+    animation:latido 2s infinite;
+}
+.carousel{
+    overflow:hidden;
+    width:100%;
+    margin-top:30px;
+}
+
+.carousel-track{
+    display:flex;
+    gap:20px;
+    width:max-content;
+    animation:mover 15s linear infinite;
+}
+
+@keyframes mover{
+    0%{
+        transform:translateX(0);
+    }
+
+    100%{
+        transform:translateX(-50%);
+    }
+}
+.captura{
+
+    width:280px;
+
+    height:280px;
+
+    object-fit:cover;
+
+    border-radius:20px;
+
+    border:3px solid #00d4ff;
+
+    box-shadow:
+    0 0 15px #00d4ff;
+
+    transition:0.4s;
+}
+
+.captura:hover{
+
+    transform:scale(1.05);
+
+    box-shadow:
+    0 0 35px #00d4ff;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BIENVENIDA -->
+
+<div id="pantallaBienvenida">
+
+    <div class="bienvenida-box">
+
+        <h1>👋 Bienvenido</h1>
+
+        <p>
+            Bienvenido al Juego Matemático Interactivo.
+            Prepárate para aprender y divertirte.
+        </p>
+
+        <button onclick="cerrarBienvenida()">
+            Entrar
+        </button>
+
+    </div>
+
+</div>
+
+<!-- VIDEO -->
+
+<video class="video-fondo" autoplay muted loop>
+    <source src="videoplayback.mp4" type="video/mp4">
+</video>
+
+<div class="capa"></div>
+
+<!-- MENU -->
+
+<nav class="menu">
+
+    <div class="logo">
+        <img src="imagenes/logo2.jpg">
+    </div>
+
+    <div class="izquierda">
+        <a href="#">Inicio</a>
+        <a href="#">Jugar</a>
+        <a href="#">Información</a>
+        <a href="#">Soporte</a>
+    </div>
+
+    <div class="derecha">
+    <a href="#">Lang: ES</a>
+    <a href="#">Mi Cuenta</a>
+    <a href="iniciar_sesion.html">Iniciar Sesión</a>
+
+    <div class="mini-circulo" id="miniCirculo"></div>
+</div>
+
+</nav>
+
+<!-- PORTADA -->
+
+<div class="portada">
+
+    <div class="circulo"
+style="background-image:url('imagenes/formula3.jpg.avif');">
+</div>
+
+    <h1 class="titulo1">BIENVENIDO</h1>
+
+    <h2 class="titulo2">DE NUEVO</h2>
+
+    <p class="texto">
+        Explora el Juego Matemático Interactivo
+    </p>
+
+    <button class="boton" onclick="contarClicks()">
+        PULSA 3 VECES PARA ENTRAR
+    </button>
+
+</div>
+<div id="contenidoPrincipal" style="display:none;">
+
+<section style="
+min-height:100vh;
+padding-top:150px;
+padding-bottom:80px;
+padding-left:80px;
+padding-right:80px;
+background:rgba(0,0,0,0.75);
+color:white;
+">
+
+<div style="
+max-width:1400px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:80px;
+
+background:rgba(255,255,255,0.08);
+
+backdrop-filter:blur(10px);
+
+border:2px solid rgba(255,255,255,0.2);
+
+border-radius:25px;
+
+padding:50px;
+
+box-shadow:
+0 0 25px rgba(0,212,255,0.5);
+">
+
+<div style="flex:1;">
+
+<h1 style="
+font-size:65px;
+font-weight:bold;
+letter-spacing:3px;
+text-transform:uppercase;
+margin-bottom:25px;
+
+color:white;
+
+text-shadow:
+0 0 10px #00d4ff,
+0 0 20px #00d4ff,
+0 0 40px #00d4ff,
+0 0 60px #00d4ff;
+">
+
+JUEGO MATEMÁTICO INTERACTIVO
+
+</h1>
+
+<p style="
+font-size:24px;
+line-height:1.8;
+text-shadow:
+0 0 5px black;
+">
+
+Desarrollo del Juego Matemático Interactivo
+en la aplicación Greenfoot.
+
+Aprende matemáticas de manera divertida,
+interactiva y moderna.
+
+</p>
+
+</div>
+
+<div style="
+flex:1;
+text-align:center;
+">
+
+<img
+src="imagenes/personajelogo1.jpg"
+
+style="
+max-width:350px;
+width:100%;
+">
+
+</div>
+
+</div>
+<!-- MODULOS Y PAGINAS -->
+
+<h2 style="
+text-align:center;
+font-size:45px;
+margin-top:80px;
+margin-bottom:40px;
+text-shadow:0 0 15px #00d4ff;
+">
+MÓDULOS Y PÁGINAS
+</h2>
+
+<div style="
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:40px;
+max-width:1000px;
+margin:auto;
+">
+
+<a href="modulo1.html" style="
+text-decoration:none;
+color:white;
+text-align:center;
+">
+
+<img src="imagenes/modulo1.jpg"
+style="
+width:100%;
+height:250px;
+object-fit:cover;
+border-radius:15px;
+
+border:3px solid #00d4ff;
+
+box-shadow:
+0 0 15px #00d4ff;
+
+transition:0.4s;
+"
+onmouseover="
+this.style.transform='scale(1.08)';
+this.style.boxShadow='0 0 35px #00d4ff';
+"
+onmouseout="
+this.style.transform='scale(1)';
+this.style.boxShadow='0 0 15px #00d4ff';
+">
+
+<h3 style="
+font-size:28px;
+margin-top:15px;
+color:white;
+text-shadow:
+0 0 10px #00d4ff;
+">
+Aritmética
+</h3>
+
+</a>
+
+<a href="modulo2.html" style="
+text-decoration:none;
+color:white;
+text-align:center;
+">
+
+<img src="imagenes/modulo2.jpg"
+style="
+width:100%;
+height:250px;
+object-fit:cover;
+border-radius:15px;
+
+border:3px solid #00d4ff;
+
+box-shadow:
+0 0 15px #00d4ff;
+
+transition:0.4s;
+"
+onmouseover="
+this.style.transform='scale(1.08)';
+this.style.boxShadow='0 0 35px #00d4ff';
+"
+onmouseout="
+this.style.transform='scale(1)';
+this.style.boxShadow='0 0 15px #00d4ff';
+">
+
+<h3 style="
+font-size:28px;
+margin-top:15px;
+color:white;
+text-shadow:
+0 0 10px #00d4ff;
+">
+Álgebra
+</h3>
+
+</a>
+
+<a href="modulo3.html" style="
+text-decoration:none;
+color:white;
+text-align:center;
+">
+
+<img src="imagenes/modulo3.jpg"
+style="
+width:100%;
+height:250px;
+object-fit:cover;
+border-radius:15px;
+
+border:3px solid #00d4ff;
+
+box-shadow:
+0 0 15px #00d4ff;
+
+transition:0.4s;
+"
+onmouseover="
+this.style.transform='scale(1.08)';
+this.style.boxShadow='0 0 35px #00d4ff';
+"
+onmouseout="
+this.style.transform='scale(1)';
+this.style.boxShadow='0 0 15px #00d4ff';
+">
+
+<h3 style="
+font-size:28px;
+margin-top:15px;
+color:white;
+text-shadow:
+0 0 10px #00d4ff;
+">
+Geometría
+</h3>
+
+</a>
+
+<a href="modulo4.html" style="
+text-decoration:none;
+color:white;
+text-align:center;
+">
+
+<img src="imagenes/modulo4.jpg"
+style="
+width:100%;
+height:250px;
+object-fit:cover;
+border-radius:15px;
+
+border:3px solid #00d4ff;
+
+box-shadow:
+0 0 15px #00d4ff;
+
+transition:0.4s;
+"
+onmouseover="
+this.style.transform='scale(1.08)';
+this.style.boxShadow='0 0 35px #00d4ff';
+"
+onmouseout="
+this.style.transform='scale(1)';
+this.style.boxShadow='0 0 15px #00d4ff';
+">
+
+<h3 style="
+font-size:28px;
+margin-top:15px;
+color:white;
+text-shadow:
+0 0 10px #00d4ff;
+">
+Razonamiento Matemático
+</h3>
+
+</a>
+
+</div>
+<!-- VISTA PREVIA DEL JUEGO -->
+
+<div style="
+max-width:1300px;
+margin:100px auto;
+background:rgba(255,255,255,0.08);
+padding:30px;
+border-radius:25px;
+border:2px solid rgba(255,255,255,0.2);
+">
+
+<div style="
+display:flex;
+justify-content:center;
+align-items:center;
+gap:30px;
+margin-bottom:40px;
+">
+
+<img src="imagenes/greenfoot.jpg.png"
+style="
+width:120px;
+height:120px;
+object-fit:cover;
+border-radius:20px;
+border:3px solid #00d4ff;
+">
+
+<div>
+
+<div style="
+background:#00d4ff;
+color:black;
+padding:10px 25px;
+border-radius:10px;
+font-weight:bold;
+display:inline-block;
+margin-bottom:15px;
+">
+Greenfoot
+</div>
+
+<h2 style="
+font-size:45px;
+text-shadow:0 0 15px #00d4ff;
+">
+VISTA PREVIA DEL JUEGO
+</h2>
+
+</div>
+
+</div>
+
+<div style="
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:nowrap;
+overflow:hidden;
+">
+
+<div class="carousel">
+
+    <div class="carousel-track">
+
+        <img src="imagenes/captura1.jpg" class="captura">
+        <img src="imagenes/captura2.jpg" class="captura">
+        <img src="imagenes/captura3.jpg" class="captura">
+        <img src="imagenes/captura4.jpg" class="captura">
+
+        <!-- Repetidas para efecto infinito -->
+
+        <img src="imagenes/captura1.jpg" class="captura">
+        <img src="imagenes/captura2.jpg" class="captura">
+        <img src="imagenes/captura3.jpg" class="captura">
+        <img src="imagenes/captura4.jpg" class="captura">
+
+    </div>
+
+</div>
+
+</div>
+
+<div style="
+text-align:center;
+margin-top:40px;
+">
+
+<a href="Juego Matematico.rar" download>
+    DESCARGAR JUEGO
+</a>
+</a>
+
+</div>
+
+</div>
+
+
+</section>
+
+</div>
+
+
+<script>
+
+/* CERRAR BIENVENIDA */
+
+function cerrarBienvenida(){
+
+    document.getElementById(
+        "pantallaBienvenida"
+    ).style.display = "none";
+
+}
+
+/* IMAGENES */
+
+const imagenes = [
+    "imagenes/formula3.jpg.avif",
+    "imagenes/mat1.jpg.jpg",
+    "imagenes/mat2.webp.jpg",
+    "imagenes/mat3.jpg.jpg",
+    "imagenes/robot.avif.jpeg",
+    "imagenes/formula2.jpg.avif"
+];
+
+let indice = 0;
+
+const circulo = document.querySelector(".circulo");
+
+circulo.style.backgroundImage = `url(${imagenes[0]})`;
+
+setInterval(() => {
+
+    indice++;
+
+    if(indice >= imagenes.length){
+        indice = 0;
+    }
+
+    circulo.style.backgroundImage = `url(${imagenes[indice]})`;
+
+}, 2500);
+
+const miniCirculo = document.getElementById("miniCirculo");
+
+let indiceMini = 0;
+
+miniCirculo.style.backgroundImage =
+`url(${imagenes[0]})`;
+
+setInterval(() => {
+
+    indiceMini++;
+
+    if(indiceMini >= imagenes.length){
+        indiceMini = 0;
+    }
+
+    miniCirculo.style.backgroundImage =
+    `url(${imagenes[indiceMini]})`;
+
+},2500);
+
+/* BOTON */
+
+let clics = 0;
+
+function contarClicks(){
+
+    clics++;
+
+    if(clics >= 3){
+
+        document.querySelector(".portada").style.display = "none";
+
+        document.getElementById(
+        "contenidoPrincipal"
+        ).style.display = "block";
+
+        document.body.style.overflow = "auto";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

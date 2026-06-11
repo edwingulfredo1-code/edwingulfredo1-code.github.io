@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iniciar Sesión</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    overflow:hidden;
+}
+
+/* VIDEO */
+
+.video-fondo{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-2;
+}
+
+.capa{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    z-index:-1;
+}
+
+/* MENU */
+
+.menu{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:110px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 40px;
+
+    background:rgba(0,0,0,0.55);
+
+    backdrop-filter:blur(8px);
+
+    border-bottom:2px solid rgba(255,255,255,0.15);
+}
+
+.logo img{
+    height:90px;
+}
+
+.izquierda,
+.derecha{
+    display:flex;
+    gap:25px;
+    align-items:center;
+}
+
+.menu a{
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+    transition:0.3s;
+}
+
+.menu a:hover{
+    color:#00d4ff;
+}
+
+/* LOGIN */
+
+.login-box{
+
+    position:absolute;
+    top:55%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:420px;
+
+    background:rgba(0,0,0,0.6);
+
+    padding:40px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    border:2px solid #00d4ff;
+
+    box-shadow:
+        0 0 20px #00d4ff,
+        0 0 40px #00d4ff;
+}
+
+/* CIRCULO */
+
+.circulo-login{
+
+    width:140px;
+    height:140px;
+
+    margin:0 auto 20px auto;
+
+    border-radius:50%;
+
+    background-size:cover;
+    background-position:center;
+
+    border:4px solid rgba(255,255,255,0.5);
+
+    box-shadow:
+        0 0 15px #00d4ff,
+        0 0 30px #00d4ff;
+
+    animation:latido 2s infinite;
+}
+
+@keyframes latido{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.08);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
+
+h2{
+    color:white;
+    margin-bottom:25px;
+}
+
+input{
+
+    width:100%;
+
+    padding:15px;
+
+    margin-bottom:15px;
+
+    border:none;
+
+    border-radius:10px;
+}
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#00d4ff;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+button:hover{
+    transform:scale(1.03);
+}
+.btn-registrar{
+
+    display:inline-block;
+
+    margin-top:10px;
+
+    padding:12px 25px;
+
+    border-radius:10px;
+
+    background:transparent;
+
+    border:2px solid #00d4ff;
+
+    color:white;
+
+    text-decoration:none;
+
+    transition:0.3s;
+}
+
+.btn-registrar:hover{
+
+    background:#00d4ff;
+
+    color:black;
+
+    box-shadow:0 0 15px #00d4ff;
+}
+
+</style>
+</head>
+
+<body>
+
+<video class="video-fondo" autoplay muted loop>
+    <source src="videoplayback.mp4" type="video/mp4">
+</video>
+
+<div class="capa"></div>
+
+<nav class="menu">
+
+    <div class="logo">
+        <img src="imagenes/logo2.jpg">
+    </div>
+
+    <div class="izquierda">
+        <a href="index.html">Inicio</a>
+        <a href="#">Jugar</a>
+        <a href="#">Información</a>
+        <a href="#">Soporte</a>
+    </div>
+
+    <div class="derecha">
+        <a href="#">Lang: ES</a>
+        <a href="#">Mi Cuenta</a>
+        <a href="iniciar_sesion.html">Iniciar Sesión</a>
+    </div>
+
+</nav>
+
+<div class="login-box">
+
+    <div class="circulo-login" id="circuloLogin"></div>
+
+    <h2>Iniciar Sesión</h2>
+
+    <input type="text" placeholder="Usuario">
+
+<input type="password" placeholder="Contraseña">
+
+<button>Entrar</button>
+
+<p style="margin-top:20px; color:white;">
+    ¿No tienes cuenta?
+</p>
+
+<a href="registrarse.html" class="btn-registrar">
+    Registrarse
+</a>
+
+
+</div>
+
+<script>
+
+const imagenesLogin = [
+    "imagenes/formula3.jpg.avif",
+    "imagenes/mat1.jpg.jpg",
+    "imagenes/mat2.webp.jpg",
+    "imagenes/mat3.jpg.jpg",
+    "imagenes/robot.avif.jpeg",
+    "imagenes/formula2.jpg.avif"
+];
+
+let indiceLogin = 0;
+
+const circuloLogin =
+document.getElementById("circuloLogin");
+
+circuloLogin.style.backgroundImage =
+`url(${imagenesLogin[0]})`;
+
+setInterval(() => {
+
+    indiceLogin++;
+
+    if(indiceLogin >= imagenesLogin.length){
+        indiceLogin = 0;
+    }
+
+    circuloLogin.style.backgroundImage =
+    `url(${imagenesLogin[indiceLogin]})`;
+
+},2500);
+
+</script>
+
+</body>
+</html>
