@@ -1,0 +1,14 @@
+{
+  "name": "stormfall-arena-multijugador",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Juego Battle Royale 2D para navegador con salas multijugador y servidor WebSocket sin dependencias externas",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED"
+}

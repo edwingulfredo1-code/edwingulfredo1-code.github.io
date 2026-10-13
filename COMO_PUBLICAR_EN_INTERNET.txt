@@ -1,0 +1,62 @@
+STORMFALL ARENA MULTIJUGADOR — PUBLICARLO CON EL NAVEGADOR
+=========================================================
+¡No necesitas instalar Node.js en tu computadora!
+El servicio Render ejecutara el servidor por ti en Internet.
+Solo necesitas un navegador y cuentas de GitHub y Render.
+
+PASO 1 — PREPARAR LOS ARCHIVOS
+1. Extrae el archivo ZIP descargado.
+2. En la carpeta veras: index.html, server.js,
+   Stormfall_Arena_Original.html, package.json, render.yaml.
+   No debes subir el archivo ZIP cerrado a GitHub: sube los archivos de adentro.
+
+PASO 2 — SUBIR A GITHUB DESDE CHROME
+1. Entra a https://github.com/new e inicia sesion (o crea una cuenta).
+2. Escribe en Repository name: stormfall-arena-online
+3. Selecciona Public (o Private, si prefieres) y pulsa Create repository.
+4. Dentro del repositorio pulsa "uploading an existing file"
+   o Add file > Upload files.
+5. Arrastra los 5 archivos del juego mencionados arriba.
+6. Pulsa Commit changes.
+
+PASO 3 — PUBLICAR EN RENDER
+1. Entra a https://dashboard.render.com e inicia sesion.
+2. Pulsa New > Web Service.
+3. Conecta tu GitHub y elige tu repositorio stormfall-arena-online.
+4. Configura:
+     Language/Runtime: Node
+     Build Command: npm install
+     Start Command: npm start
+     Instance Type/Plan: Free (si esta disponible)
+5. Pulsa Create Web Service.
+6. Cuando Render muestre que se publico correctamente, abre
+   la direccion HTTPS que te asigne, por ejemplo:
+   https://stormfall-arena-online-ABCD.onrender.com
+   (La direccion del ejemplo no existe: usa la tuya.)
+
+PASO 4 — JUGAR CON AMIGOS
+1. Abre esa URL HTTPS desde tu navegador Chrome.
+2. Escribe tu nombre y pulsa CREAR SALA.
+3. Comparte el enlace y el codigo de sala con tus amigos.
+4. Tus amigos abren el mismo enlace, ingresan su nombre,
+   pulsan UNIRME y ponen el codigo de sala.
+5. El anfitrion pulsa COMENZAR BATALLA.
+
+IMPORTANTE
+- El primer juego original tambien queda disponible en:
+  https://TU_URL.onrender.com/Stormfall_Arena_Original.html
+- NO utilices un alojamiento solo de HTML (p. ej. Netlify Drop).
+  Para multijugador en este proyecto se necesita un servidor Node
+  con WebSockets, que Render ejecuta por ti.
+- Un servicio gratuito de Render puede pausarse tras 15 minutos
+  sin trafico y demorar al reactivarse; puede tener otras limitaciones.
+- Mantener la misma URL NO asegura que las salas antiguas se conserven:
+  las salas estan en memoria y se pierden si el servidor se reinicia.
+- No necesitas usar terminal ni programar nada para publicarlo.
+- Si la cuenta requiere un medio de pago o no permite la opción Free,
+  revisa los planes de Render antes de confirmar.
+
+FUENTES OFICIALES
+https://render.com/docs/web-services
+https://render.com/docs/websocket
+https://render.com/docs/free
